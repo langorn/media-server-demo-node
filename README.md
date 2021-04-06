@@ -25,7 +25,7 @@ The demo will open an HTPPS/WSS server at port 8000.
 ## Conclusion
 i fork a branch from medooze media-server-demo-node, some syntax are depreciated, and i amended it
 , also mark some code about setDirection ( i have not idea why yet )  , then the demo works....
-
+and i only amend broadcast function only.
 https://github.com/medooze/media-server-demo-node
 
 ## Demos
