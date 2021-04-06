@@ -14,6 +14,19 @@ node index.js <ip>
 
 The demo will open an HTPPS/WSS server at port 8000. 
 
+## HOW TO USE A RTSP/RTP stream into webrtc
+FFMPEG command - generate a ffmpeg video streaming and push stream to your server ip
+```
+ffmpeg -rtsp_transport tcp -i 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov' -c:v copy -an -f rtp rtp://<ip>:5004
+```
+
+The demo will open an HTPPS/WSS server at port 8000. 
+
+## Conclusion
+i fork a branch from medooze media-server-demo-node, some syntax are depreciated, and i amended it , 
+also mark some code about setDirection ( i have not idea why yet )  , then the demo works....
+https://github.com/medooze/media-server-demo-node
+
 ## Demos
 ### SVC Layer selection
 
