@@ -10,10 +10,11 @@ function addVideoForStream(stream,muted)
 	//Set same id
 	video.id = stream.id;
 	//Set src stream
-	video.src = URL.createObjectURL(stream);
+	video.srcObject = stream;
 	//Set other properties
 	video.autoplay = true;
 	video.muted = muted;
+	video.play();
 }
 function removeVideoForStream(stream)
 {
@@ -30,8 +31,8 @@ function removeVideoForStream(stream)
 
 var sdp;
 var pc;
-	
-function connect() 
+
+function connect()
 {
 
 	if (window.RTCPeerConnection)
@@ -39,29 +40,33 @@ function connect()
 			bundlePolicy: "max-bundle",
 			rtcpMuxPolicy : "require"
 		});
-	else 
+	else
 		pc = new webkitRTCPeerConnection(null);
-	
-	var ws = new WebSocket(url,"broadcast");
-	
-	pc.onaddstream = function(event) {
-		var prev = 0;
-		console.debug("onAddStream",event);
-		//Play it
-		addVideoForStream(event.stream);
 
-			
-	};
-	
+	var ws = new WebSocket(url,"broadcast");
+
+	// pc.onaddstream = function(event) {
+	// 	var prev = 0;
+	// 	console.debug("onAddStream",event);
+	// 	//Play it
+	// 	addVideoForStream(event.stream);
+	//
+	//
+	// };
+
 	pc.onremovestream = function(event) {
 		console.debug("onRemoveStream",event);
 		//Play it
 		removeVideoForStream(event.stream);
 	};
-	
+
 	ws.onopen = function(){
 		console.log("opened");
-		
+		// it's change to track because onaddstream is depreciation
+		pc.ontrack =function(e){
+			console.log(e)
+			addVideoForStream(e.streams[0]);
+		}
 	//Create new offer
 	pc.createOffer({
 			offerToReceiveVideo: true
@@ -83,13 +88,13 @@ function connect()
 			console.error("Error",error);
 		});
 	};
-	
+
 	ws.onmessage = function(event){
 		console.log(event);
-		
+
 		//Get protocol message
 		const msg = JSON.parse(event.data);
-		
+
 		console.log(msg.answer);
 		pc.setRemoteDescription(new RTCSessionDescription({
 				type:'answer',
@@ -114,8 +119,3 @@ if (dialog.showModal)
 } else {
 	connect();
 }
-
-
-
-
-
