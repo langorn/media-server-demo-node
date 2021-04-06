@@ -23,8 +23,9 @@ ffmpeg -rtsp_transport tcp -i 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuc
 The demo will open an HTPPS/WSS server at port 8000. 
 
 ## Conclusion
-i fork a branch from medooze media-server-demo-node, some syntax are depreciated, and i amended it , 
-also mark some code about setDirection ( i have not idea why yet )  , then the demo works....
+i fork a branch from medooze media-server-demo-node, some syntax are depreciated, and i amended it
+, also mark some code about setDirection ( i have not idea why yet )  , then the demo works....
+
 https://github.com/medooze/media-server-demo-node
 
 ## Demos
